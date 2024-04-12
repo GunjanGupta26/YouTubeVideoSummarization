@@ -12,32 +12,32 @@ import moviepy.editor as mp
 from youtube_transcript_api import TranscriptsDisabled
 from pydub import AudioSegment
 
-def convert_mp4_to_wav(input_file, output_file):
-    audio = AudioSegment.from_file(input_file, format="mp4")
-    audio.export(output_file, format="wav")
-
-
-
 # def convert_mp4_to_wav(input_file, output_file):
-#     """
-#     Converts an MP4 audio file to a WAV file.
+#     audio = AudioSegment.from_file(input_file, format="mp4")
+#     audio.export(output_file, format="wav")
+
+
+
+def convert_mp4_to_wav(input_file, output_file):
+    """
+    Converts an MP4 audio file to a WAV file.
     
-#     Args:
-#         input_file (str): Path to the input MP4 file.
-#         output_file (str): Path to the output WAV file.
-#     """
-#     # Load the MP4 file
-#     video = mp.VideoFileClip(input_file)
+    Args:
+        input_file (str): Path to the input MP4 file.
+        output_file (str): Path to the output WAV file.
+    """
+    # Load the MP4 file
+    video = mp.VideoFileClip(input_file)
     
-#     # Extract the audio from the video
-#     audio = video.audio
+    # Extract the audio from the video
+    audio = video.audio
     
-#     # Write the audio to a WAV file
-#     audio.write_audiofile(output_file)
+    # Write the audio to a WAV file
+    audio.write_audiofile(output_file)
     
-#     # Close the video and audio resources
-#     video.close()
-#     audio.close()
+    # Close the video and audio resources
+    video.close()
+    audio.close()
 
 
 
@@ -68,7 +68,7 @@ def main():
                 output_file = 'ytaudio.wav'
                 convert_mp4_to_wav(input_file, output_file)
                 model = SpeechRecognitionModel("jonatasgrosman/wav2vec2-large-xlsr-53-english", device="cuda" if torch.cuda.is_available() else "cpu")
-                audio_path = ['/content/ytaudio.wav']
+                audio_path = ['./content/ytaudio.wav']
                 transcriptions = model.transcribe(audio_path)
                 subtitle = ' '.join([t['transcription'] for t in transcriptions])
 
