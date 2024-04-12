@@ -52,7 +52,7 @@ GitPython==3.1.27
 greenlet==1.1.2
 gTTS==2.5.1
 huggingface-hub==0.20.3
-huggingsound==0.1.0
+huggingsound==0.1.6
 idna==3.3
 imageio==2.34.0
 imageio-ffmpeg==0.4.9
