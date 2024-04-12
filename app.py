@@ -18,21 +18,12 @@ from pydub import AudioSegment
 
 
 
-# 
-import ffmpeg
-
 def convert_mp4_to_wav(input_file, output_file):
-    """
-    Converts an MP4 audio file to a WAV file using FFmpeg.
-    
-    Args:
-        input_file (str): Path to the input MP4 file.
-        output_file (str): Path to the output WAV file.
-    """
-    try:
-        ffmpeg.input(input_file).output(output_file, format='wav').run()
-    except Exception as e:
-        print(f"Error converting MP4 to WAV: {e}")
+    audio = AudioSegment.from_file(input_file, format="mp4")
+    audio.export(output_file, format="wav")
+
+
+
 
 
 
