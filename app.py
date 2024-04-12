@@ -26,18 +26,25 @@ def convert_mp4_to_wav(input_file, output_file):
         input_file (str): Path to the input MP4 file.
         output_file (str): Path to the output WAV file.
     """
-    # Load the MP4 file
-    video = mp.VideoFileClip(input_file)
-    
-    # Extract the audio from the video
-    audio = video.audio
-    
-    # Write the audio to a WAV file
-    audio.write_audiofile(output_file)
-    
-    # Close the video and audio resources
-    video.close()
-    audio.close()
+    try:
+        # Load the MP4 file
+        video = mp.VideoFileClip(input_file)
+        
+        # Check if the video has audio
+        if video.audio is None:
+            raise ValueError("Video does not contain audio.")
+
+        # Extract the audio from the video
+        audio = video.audio
+        
+        # Write the audio to a WAV file
+        audio.write_audiofile(output_file)
+        
+        # Close the video and audio resources
+        video.close()
+        audio.close()
+    except Exception as e:
+        print(f"Error converting MP4 to WAV: {e}")
 
 
 
