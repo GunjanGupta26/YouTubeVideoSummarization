@@ -38,7 +38,9 @@ def convert_mp4_to_wav(input_file, output_file):
         audio = video.audio
         
         # Write the audio to a WAV file
-        audio.write_audiofile(output_file)
+       
+        audio.write_audiofile(output_file[:-4] + ".mp3")
+
         
         # Close the video and audio resources
         video.close()
