@@ -183,3 +183,4 @@ youtube-transcript-api==0.6.0
 zipp==3.8.0
 zope.event==4.5.0
 zope.interface==5.4.0
+torch==2.2.2
