@@ -12,41 +12,41 @@ import moviepy.editor as mp
 from youtube_transcript_api import TranscriptsDisabled
 from pydub import AudioSegment
 
-# def convert_mp4_to_wav(input_file, output_file):
-#     audio = AudioSegment.from_file(input_file, format="mp4")
-#     audio.export(output_file, format="wav")
-
-
-
 def convert_mp4_to_wav(input_file, output_file):
-    """
-    Converts an MP4 audio file to a WAV file.
+    audio = AudioSegment.from_file(input_file, format="mp4")
+    audio.export(output_file, format="wav")
+
+
+
+# def convert_mp4_to_wav(input_file, output_file):
+#     """
+#     Converts an MP4 audio file to a WAV file.
     
-    Args:
-        input_file (str): Path to the input MP4 file.
-        output_file (str): Path to the output WAV file.
-    """
-    try:
-        # Load the MP4 file
-        video = mp.VideoFileClip(input_file)
+#     Args:
+#         input_file (str): Path to the input MP4 file.
+#         output_file (str): Path to the output WAV file.
+#     """
+#     try:
+#         # Load the MP4 file
+#         video = mp.VideoFileClip(input_file)
         
-        # Check if the video has audio
-        if video.audio is None:
-            raise ValueError("Video does not contain audio.")
+#         # Check if the video has audio
+#         if video.audio is None:
+#             raise ValueError("Video does not contain audio.")
 
-        # Extract the audio from the video
-        audio = video.audio
+#         # Extract the audio from the video
+#         audio = video.audio
         
-        # Write the audio to a WAV file
+#         # Write the audio to a WAV file
        
-        audio.write_audiofile(output_file[:-4] + ".mp3")
+#         audio.write_audiofile(output_file[:-4] + ".mp3")
 
         
-        # Close the video and audio resources
-        video.close()
-        audio.close()
-    except Exception as e:
-        print(f"Error converting MP4 to WAV: {e}")
+#         # Close the video and audio resources
+#         video.close()
+#         audio.close()
+#     except Exception as e:
+#         print(f"Error converting MP4 to WAV: {e}")
 
 
 
