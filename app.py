@@ -16,9 +16,10 @@ from pydub import AudioSegment
 import os
 import ffmpeg
 import speech_recognition as sr
+from flask_cors import CORS
 
 app = Flask(__name__)
-# cors = CORS(app, resources={r"*": {"origins": "*"}})
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 api = Api(app)
 
 class Home(Resource):
@@ -32,9 +33,8 @@ class Home(Resource):
     #     audio = AudioSegment.from_file(input_file, format="mp4")
     #     audio.export(output_file, format="wav")
 
-    def solve(self):
-        link = "https://youtu.be/RIJ2Jclv9Dg?si=SPwk1Dhw3W2EeMwe" # without subtitle
-        video_link = link
+    def solve(self,video_link):
+        print(video_link)
 
         if video_link:
             try:
@@ -69,17 +69,18 @@ class Home(Resource):
                 summary = tokenizer.decode(outputs_tensor[0])
                 print(summary)
                 print('done')
-                return summary, 201
+                return summary
             except Exception as e:
                 return (f"Error: {e}")
 
 
     def post(self):
         try:
-            value = request.get_json()
-            self.solve()
+            res = request.get_json()
+            link = res['yt_link']
+            value = self.solve(link)
             if (value):
-                return "Data received", 201
+                return value, 201
 
             return {"error": "Invalid format."}
 
