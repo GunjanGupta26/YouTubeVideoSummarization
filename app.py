@@ -13,6 +13,9 @@ import os
 import moviepy.editor as mp
 from youtube_transcript_api import TranscriptsDisabled
 from pydub import AudioSegment
+import os
+import ffmpeg
+import speech_recognition as sr
 
 app = Flask(__name__)
 # cors = CORS(app, resources={r"*": {"origins": "*"}})
@@ -22,10 +25,12 @@ class Home(Resource):
     def get(self):
         return 'Welcome to, Test App API!'
 
-    
-    def convert_mp4_to_wav(self,input_file, output_file):
-        audio = AudioSegment.from_file(input_file, format="mp4")
-        audio.export(output_file, format="wav")
+    def convert_mp4_to_wav(self, input_file, output_file):
+        ffmpeg.input(input_file).output(output_file).run()
+
+    # def convert_mp4_to_wav(self,input_file, output_file):
+    #     audio = AudioSegment.from_file(input_file, format="mp4")
+    #     audio.export(output_file, format="wav")
 
     def solve(self):
         link = "https://youtu.be/RIJ2Jclv9Dg?si=SPwk1Dhw3W2EeMwe" # without subtitle
@@ -48,19 +53,23 @@ class Home(Resource):
                     input_file = 'ytaudio.mp4'
                     output_file = 'ytaudio.wav'
                     self.convert_mp4_to_wav(input_file, output_file)
+                    print('hello')
                     model = SpeechRecognitionModel("jonatasgrosman/wav2vec2-large-xlsr-53-english", device="cuda" if torch.cuda.is_available() else "cpu")
-                    audio_path = ['/content/ytaudio.wav']
+                    print('model ->')
+                    print(model)
+                    audio_path = ['./ytaudio.wav']
                     transcriptions = model.transcribe(audio_path)
                     subtitle = ' '.join([t['transcription'] for t in transcriptions])
+                    print(subtitle)
 
                 tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn')
                 model = BartForConditionalGeneration.from_pretrained('facebook/bart-large-cnn')
                 input_tensor = tokenizer.encode(subtitle, return_tensors="pt", max_length=512)
                 outputs_tensor = model.generate(input_tensor, max_length=160, min_length=120, length_penalty=2.0, num_beams=4, early_stopping=True)
                 summary = tokenizer.decode(outputs_tensor[0])
-
                 print(summary)
                 print('done')
+                return summary, 201
             except Exception as e:
                 return (f"Error: {e}")
 
