@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-
+import './App.css'
 function App() {
   const [disabled, setDisabled] = useState(true);
   const [inputValue, setInputValue] = useState("");
@@ -27,8 +27,8 @@ function App() {
   };
   return (
     <div>
-      <h1>Welcome!</h1>
-      <h2>Youtube Summarizer</h2>
+      <h1>Youtube Video Summarizer</h1>
+      <h2>Navigate YouTube with Ease: Concise Video Summaries</h2>
       <p>Paste your youtube link below</p>
       <input
         type="text"
