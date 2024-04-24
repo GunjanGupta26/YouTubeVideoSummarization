@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import './App.css'
+import React from 'react';
+import Logo from './images/Logo.png'; 
+
 function App() {
   const [disabled, setDisabled] = useState(true);
   const [inputValue, setInputValue] = useState("");
@@ -16,7 +19,7 @@ function App() {
 
   const handleClick = async () => {
     axios
-      .post("http://127.0.0.1:5000", {
+      .post("http://127.0.0.1:8000", {
         yt_link: inputValue,
       })
       .then((res) => {
@@ -27,9 +30,16 @@ function App() {
   };
   return (
     <div>
+      <div className="left">
+      <img  className="logo"  style={{ width: '10%', height: '10%' }} src={Logo} alt="Logo" />
+      </div>
+      
+      <div className="right">
       <h1>Youtube Video Summarizer</h1>
       <h2>Navigate YouTube with Ease: Concise Video Summaries</h2>
-      <p>Paste your youtube link below</p>
+      </div>
+      
+      <p>Paste the youtube link below</p>
       <input
         type="text"
         value={inputValue}
