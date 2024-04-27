@@ -17,7 +17,9 @@ import os
 import ffmpeg
 import speech_recognition as sr
 from flask_cors import CORS
-
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import nltk
+nltk.download('punkt')
 app = Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 api = Api(app)
@@ -51,6 +53,7 @@ class Home(Resource):
                     audio_stream = yt.streams.filter(only_audio=True, file_extension='mp4').first()
                     audio_stream.download(filename='ytaudio.mp4')
                     input_file = 'ytaudio.mp4'
+                    print('mp4 done')
                     output_file = 'ytaudio.wav'
                     self.convert_mp4_to_wav(input_file, output_file)
                     print('hello')
@@ -62,11 +65,24 @@ class Home(Resource):
                     subtitle = ' '.join([t['transcription'] for t in transcriptions])
                     print(subtitle)
 
-                tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn')
-                model = BartForConditionalGeneration.from_pretrained('facebook/bart-large-cnn')
-                input_tensor = tokenizer.encode(subtitle, return_tensors="pt", max_length=512)
-                outputs_tensor = model.generate(input_tensor, max_length=160, min_length=120, length_penalty=2.0, num_beams=4, early_stopping=True)
-                summary = tokenizer.decode(outputs_tensor[0])
+                # tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn')
+                # model = BartForConditionalGeneration.from_pretrained('facebook/bart-large-cnn')
+                # input_tensor = tokenizer.encode(subtitle, return_tensors="pt", max_length=512)
+                # outputs_tensor = model.generate(input_tensor, max_length=160, min_length=120, length_penalty=2.0, num_beams=4, early_stopping=True)
+                # summary = tokenizer.decode(outputs_tensor[0])
+                # print(summary)
+                tokenizer = AutoTokenizer.from_pretrained("Mr-Vicky-01/Bart-Finetuned-conversational-summarization")
+                model = AutoModelForSeq2SeqLM.from_pretrained("Mr-Vicky-01/Bart-Finetuned-conversational-summarization")
+
+                def generate_summary(text):
+                    inputs = tokenizer([text], max_length=102400, return_tensors='pt', truncation=True)
+                    summary_ids = model.generate(inputs['input_ids'], max_new_tokens=10000, do_sample=False)
+                    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+                    return summary
+
+                text_to_summarize = subtitle
+                summary = generate_summary(text_to_summarize)
+
                 print(summary)
                 print('done')
                 return summary

@@ -19,19 +19,19 @@ function App() {
 
   const handleClick = async () => {
     axios
-      .post("http://127.0.0.1:8000", {
+      .post("http://127.0.0.1:5000", {
         yt_link: inputValue,
       })
       .then((res) => {
-        setResponse(res.data[0])
-        console.log(res.data[0])
+        setResponse(res.data)
+        console.log(res.data)
       });
     setInputValue("");
   };
   return (
     <div>
       <div className="left">
-      <img  className="logo"  style={{ width: '10%', height: '10%' }} src={Logo} alt="Logo" />
+      <img  className="logo" src={Logo} alt="Logo" />
       </div>
       
       <div className="right">
@@ -48,7 +48,7 @@ function App() {
       <button onClick={handleClick} disabled={disabled} type="submit">
         Click
       </button>
-      <p>{response}</p>
+      <p className="response">{response}</p>
     </div>
   );
 }
