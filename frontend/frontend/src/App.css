@@ -5,23 +5,25 @@ body {
   }
   
   h1 {
-    margin-top:55px;
+    margin-top:1px;
     color: white;
     font-size:50px;
     color:rgb(235, 206, 169)
   }
   
   h2 {
-    color: white;
-    font-size:18px;
+   color: white;
+   font-size:18px;
    font-style:italic;
    color:rgb(195, 213, 228)
 
   }
-  p{
+  .intro-text{
     margin-top:80px;
     color:white;
     font-size:20px;
+    
+    
   }
   
   input {
@@ -52,9 +54,20 @@ body {
 
 .response {
     color: white;
+    text-align: justify;
+    margin: 80px 130px 0px 130px;
+    box-shadow: rgb(195, 213, 228) 0px 7px 29px 0px;
+    padding: 2%;
 }
 
-.logo {
-    width: '10%';
-    height: '10%';
+
+.left{
+ text-align: left;
+
+}
+
+p{
+    color:white;
+    font-size:20px;
+    
 }

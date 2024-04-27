@@ -19,7 +19,7 @@ function App() {
 
   const handleClick = async () => {
     axios
-      .post("http://127.0.0.1:5000", {
+      .post("http://127.0.0.1:8000", {
         yt_link: inputValue,
       })
       .then((res) => {
@@ -31,7 +31,7 @@ function App() {
   return (
     <div>
       <div className="left">
-      <img  className="logo" src={Logo} alt="Logo" />
+      <img  className="logo" src={Logo}style={{ width: '10%', marginTop: '2%' , marginLeft:'2%'}} alt="Logo" />
       </div>
       
       <div className="right">
@@ -39,7 +39,7 @@ function App() {
       <h2>Navigate YouTube with Ease: Concise Video Summaries</h2>
       </div>
       
-      <p>Paste the youtube link below</p>
+      <p className="intro-text">Paste the youtube link below</p>
       <input
         type="text"
         value={inputValue}
@@ -48,7 +48,12 @@ function App() {
       <button onClick={handleClick} disabled={disabled} type="submit">
         Click
       </button>
-      <p className="response">{response}</p>
+
+      <div className="response">
+      <p>Summary :</p>
+      <p>{response}</p>
+      </div>
+      
     </div>
   );
 }
