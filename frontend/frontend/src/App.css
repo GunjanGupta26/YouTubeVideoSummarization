@@ -49,3 +49,12 @@ body {
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+.response {
+    color: white;
+}
+
+.logo {
+    width: '10%';
+    height: '10%';
+}
